@@ -1,0 +1,39 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "TransitGatewayRead",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeTransitGateways",
+                "ec2:DescribeTransitGatewayAttachments",
+                "ec2:DescribeTransitGatewayVpcAttachments",
+                "ec2:DescribeTransitGatewayRouteTables",
+                "ec2:GetTransitGatewayRouteTableAssociations",
+                "ec2:SearchTransitGatewayRoutes"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VPCRouteTableManagement",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeRouteTables",
+                "ec2:CreateRoute",
+                "ec2:DeleteRoute",
+                "ec2:ReplaceRoute"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "CloudWatchLogs",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        }
+    ]
+}
