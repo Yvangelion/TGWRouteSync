@@ -6,7 +6,7 @@
 [![Amazon EventBridge](https://img.shields.io/badge/AWS-EventBridge-FF4F8B?style=flat&logo=amazoneventbridge&logoColor=white)](https://aws.amazon.com/eventbridge/)
 [![AWS IAM](https://img.shields.io/badge/AWS-IAM-232F3E?style=flat&logo=amazonaws&logoColor=white)](https://aws.amazon.com/iam/)
 [![AWS Transit Gateway](https://img.shields.io/badge/AWS-Transit%20Gateway-FF9900?style=flat&logo=amazonaws&logoColor=white)](https://aws.amazon.com/transit-gateway/)
-[![AWS Network Manager](https://img.shields.io/badge/AWS-Network%20Manager-FF9900?style=flat&logo=amazonaws&logoColor=white)](https://aws.amazon.com/cloud-wan/))
+[![AWS Network Manager](https://img.shields.io/badge/AWS-Network%20Manager-FF9900?style=flat&logo=amazonaws&logoColor=white)](https://aws.amazon.com/cloud-wan/)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
