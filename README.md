@@ -172,13 +172,7 @@ AWS Network Manager emits **all** routing events to EventBridge exclusively in `
 
 #### 1.3 Verify Registration
 
-Wait for status to become `AVAILABLE`:
-
-```bash
-aws networkmanager get-transit-gateway-registrations \
-    --global-network-id global-network-XXXXXXXXXXXX \
-    --region us-west-2
-```
+Wait for status to become `AVAILABLE`
 
 ---
 
