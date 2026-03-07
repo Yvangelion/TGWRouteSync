@@ -1,4 +1,4 @@
-# AWS Transit Gateway Route Sync Lambda
+# AWS Transit Gateway Route Sync
 
 > Automatically synchronize AWS Transit Gateway routes to VPC subnet route tables using Network Manager events and EventBridge.
 
@@ -6,7 +6,7 @@
 [![Amazon EventBridge](https://img.shields.io/badge/AWS-EventBridge-FF4F8B?style=flat&logo=amazoneventbridge&logoColor=white)](https://aws.amazon.com/eventbridge/)
 [![AWS IAM](https://img.shields.io/badge/AWS-IAM-232F3E?style=flat&logo=amazonaws&logoColor=white)](https://aws.amazon.com/iam/)
 [![AWS Transit Gateway](https://img.shields.io/badge/AWS-Transit%20Gateway-FF9900?style=flat&logo=amazonaws&logoColor=white)](https://aws.amazon.com/transit-gateway/)
-[![AWS Network Manager](https://img.shields.io/badge/AWS-Network%20Manager-FF9900?style=flat&logo=amazonaws&logoColor=white)](https://aws.amazon.com/network-manager/)
+[![AWS Network Manager](https://img.shields.io/badge/AWS-Network%20Manager-FF9900?style=flat&logo=amazonaws&logoColor=white)](https://aws.amazon.com/cloud-wan/))
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -49,47 +49,47 @@ Managing route tables across multiple VPCs connected to a Transit Gateway can be
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
-│                                    EVENT FLOW                                            │
+│                                    EVENT FLOW                                           │
 ├─────────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                          │
+│                                                                                         │
 │   TRIGGER SOURCES (Any Region)                                                          │
 │   ┌──────────────────┐    ┌──────────────────┐    ┌──────────────────┐                  │
 │   │  VPN Route       │    │  Static Route    │    │  Scheduled Poll  │                  │
 │   │  Change (BGP)    │    │  Added/Removed   │    │  (Backup)        │                  │
 │   └────────┬─────────┘    └────────┬─────────┘    └────────┬─────────┘                  │
-│            │                       │                       │                             │
-│            └───────────────────────┼───────────────────────┘                             │
-│                                    ▼                                                     │
+│            │                       │                       │                            │
+│            └───────────────────────┼───────────────────────┘                            │
+│                                    ▼                                                    │
 │   ┌─────────────────────────────────────────────────────────────────────────────────┐   │
-│   │                      AWS NETWORK MANAGER (Global)                                │   │
-│   │                   TGW must be registered here to emit events                     │   │
+│   │                      AWS NETWORK MANAGER (Global)                               │   │
+│   │                   TGW must be registered here to emit events                    │   │
 │   └─────────────────────────────────────────────────────────────────────────────────┘   │
-│                                    │                                                     │
-│                                    ▼                                                     │
+│                                    │                                                    │
+│                                    ▼                                                    │
 │   ┌─────────────────────────────────────────────────────────────────────────────────┐   │
-│   │                    AMAZON EVENTBRIDGE (us-west-2 only)                           │   │
-│   │                                                                                  │   │
+│   │                    AMAZON EVENTBRIDGE (us-west-2 only)                          │   │
+│   │                                                                                 │   │
 │   │   Rule filters: source = "aws.networkmanager"                                   │   │
 │   │                 detail-type = "Network Manager Routing Update"                  │   │
 │   └─────────────────────────────────────────────────────────────────────────────────┘   │
-│                                    │                                                     │
-│                                    ▼                                                     │
+│                                    │                                                    │
+│                                    ▼                                                    │
 │   ┌─────────────────────────────────────────────────────────────────────────────────┐   │
-│   │                    AWS LAMBDA (us-west-2, calls any region)                      │   │
-│   │                                                                                  │   │
+│   │                    AWS LAMBDA (us-west-2, calls any region)                     │   │
+│   │                                                                                 │   │
 │   │   1. Extract TGW Route Table ID from event                                      │   │
 │   │   2. Get all routes from TGW route table                                        │   │
 │   │   3. Find VPC attachments associated with that TGW route table                  │   │
 │   │   4. Find VPC route tables tagged: TGWRouteSync=enabled                         │   │
 │   │   5. Compare & sync routes (add missing, remove stale)                          │   │
 │   └─────────────────────────────────────────────────────────────────────────────────┘   │
-│                                    │                                                     │
-│                                    ▼                                                     │
+│                                    │                                                    │
+│                                    ▼                                                    │
 │   ┌─────────────────────────────────────────────────────────────────────────────────┐   │
-│   │                      VPC SUBNET ROUTE TABLES (Any Region)                        │   │
-│   │                        Tagged: TGWRouteSync=enabled                              │   │
+│   │                      VPC SUBNET ROUTE TABLES (Any Region)                       │   │
+│   │                        Tagged: TGWRouteSync=enabled                             │   │
 │   └─────────────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                          │
+│                                                                                         │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
