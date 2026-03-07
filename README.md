@@ -1,4 +1,4 @@
-# AWS Transit Gateway Automatic Route Propagation into VPC Route Tables
+# AWS Transit Gateway Automatic Route Sync
 
 > Automatically synchronize AWS Transit Gateway routes to VPC subnet route tables using Network Manager events and EventBridge.
 
